@@ -59,10 +59,10 @@ const products:Product[] = [
     {title:"G", price:7}
 ];
 
-function filterProductByPrice():Product[] {
-    return products.filter((e:Product):boolean => e.price > 4);
+function filterProductByPrice(price:number):Product[] {
+    return products.filter((e:Product):boolean => e.price > price);
 };
-console.log(filterProductByPrice());
+console.log(filterProductByPrice(4));
 
 //У вас есть массив объектов, представляющих книги. Напишите функцию, 
 //которая находит книгу по её названию.
@@ -75,7 +75,7 @@ const books:Book[] = [
 ];
 
 function findBookByTitle(title:string):Book | undefined{
-    return books.find((e: Book)=> e.title === title);
+    return books.find((e: Book):boolean=> e.title === title);
 };
 console.log(findBookByTitle("Name3"));
 
@@ -83,9 +83,7 @@ console.log(findBookByTitle("Name3"));
 //Напишите функцию, которая вычисляет общую сумму цен продуктов.
 
 function totalPrice():number{
-    return products.reduce((sum:number, product:Product):number=>{
-        return sum + product.price;
-    }, 0)
+    return products.reduce((sum:number, product:Product):number=> sum + product.price, 0)
 }
 console.log(totalPrice());
 
@@ -102,14 +100,14 @@ const students: Student []= [
     {name:"Name5", grade:103},
     {name:"Name6", grade:104}
 ];
-function updateStudentsGrades(name: string, newGrade: number):void{
+function updateGrades(name: string, newGrade: number):void{
     students.forEach((e:Student):void=>{
         if(e.name === name){
             e.grade = newGrade;
         }
     });
 };
-updateStudentsGrades("Name3",110);
+updateGrades("Name3",110);
 console.log(students);
 
 //У вас есть массив объектов, представляющих заказы с полем "статус" 
@@ -124,22 +122,23 @@ const orders:Order[] = [
     {orderNumber: 5, status:"delivered"},
     {orderNumber: 6, status:"delivered"},
 ];
-function orderStatusCalculation(status: string):number{
-    return orders.reduce((sum:number, order:Order)=>{
+function statusCalculation(status: string):number{
+    return orders.reduce((sum: number, order: Order)=> {
         if(order.status === status){
             sum++;
         };
         return sum;
     }, 0);
+//return orders.filter((e:Order):boolean=> e.status === status).length;-способ лучше
 };
-console.log(orderStatusCalculation("delivered"));
+console.log(statusCalculation("delivered"));
 
 //У вас есть массив объектов, представляющих товары с полем "цена". 
 //Напишите функцию, которая находит товар с максимальной ценой. 
 //Если таких товаров несколько, верните первый.
 
-function maxPrice():Product | undefined{
-    let max:Product = {title:"", price:0};
+function maxPrice(): Product | undefined{
+    let max: Product = {title: "", price:0 };
     for (let i = 0; i < products.length; i++) {
         if(products[i].price > max.price){
             max.price = products[i].price;
@@ -147,6 +146,7 @@ function maxPrice():Product | undefined{
         };
     }
     return max;
+//return products.reduce((a:Product, b:Product):Product => a.price > a.price? a:b);-способ лучше
 };
 console.log(maxPrice());
 
