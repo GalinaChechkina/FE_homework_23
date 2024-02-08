@@ -176,6 +176,7 @@ let autos1: Auto[] = [
 ];
 function combiningArrays():void{
     autos1.forEach((e:Auto)=> autos.push(e));
+    //return [...autos,...autos1];-способ лучше
 };
 combiningArrays();
 console.log(autos);
